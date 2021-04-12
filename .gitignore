@@ -1,3 +1,9 @@
 *.out
 *.pdf
 *.csv
+*.svg
+*.png
+*.data
+*.old
+profile
+callgrind.out*

@@ -1,0 +1,3 @@
+all: main.cpp HashTable.cpp HashFunctions.cpp
+	g++ main.cpp HashTable.cpp HashFunctions.cpp -Wall -g -O3
+	valgrind --tool=callgrind ./a.out
