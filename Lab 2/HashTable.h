@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <immintrin.h>
 #include "HashFunctions.h"
 
 struct Noncopyable
@@ -19,6 +20,7 @@ struct Noncopyable
 
 struct Elem: Noncopyable
 {
+    // __m256i_u key_ = _mm256_set1_epi8 (0); // ToDo^ strcmp == _mm256_testc_si256
     const char* key_   = nullptr;
     const char* value_ = nullptr;
     Elem*       next_  = nullptr;

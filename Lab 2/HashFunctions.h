@@ -8,6 +8,9 @@ hash_t LenHash       (const char* key);
 hash_t SumHash       (const char* key);
 hash_t SumLenHash    (const char* key);
 hash_t FirstCharHash (const char* key);
-hash_t RolHash       (const char* key);
-hash_t RorHash       (const char* key);
-hash_t CRC32Hash     (const char* key);
+extern "C"
+{
+    hash_t RolHash       (const char* key);
+    hash_t RorHash       (const char* key);
+    hash_t CRC32Hash     (const char* key);
+}

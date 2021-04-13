@@ -1,3 +1,5 @@
-all: main.cpp HashTable.cpp HashFunctions.cpp
-	g++ main.cpp HashTable.cpp HashFunctions.cpp -Wall -g -O3
-	valgrind --tool=callgrind ./a.out
+all: main.cpp HashTable.cpp HashFunctions.asm
+	nasm -f elf64 HashFunctions.asm
+	g++ main.cpp HashTable.cpp -Wall -c -O3
+	g++ main.o HashTable.o HashFunctions.o -no-pie -O3
+	valgrind --tool=callgrind ./a.out > out.txt

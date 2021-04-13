@@ -7,3 +7,4 @@
 *.old
 profile
 callgrind.out*
+plan.txt

@@ -13,7 +13,7 @@ ax  = fig.add_subplot (1,1,1)
 ax.bar (list (range (stat_size)), stat)
 
 # Warning: magic constants!
-mean = 6507 / 400
+mean = 6507 / 4400
 
 ax.plot ([0, stat_size], [mean, mean], label = "Среднее значение", color = "red", alpha = 0.5)
 
