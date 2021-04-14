@@ -121,8 +121,20 @@ void HashTable :: GetStatistic ()
 
     FILE* stat = fopen ("Statistic.csv", "w");
 
+    double E_hash = 0, E2_hash = 0;
+
     for (size_t i_elem = 0; i_elem < table_size_; i_elem++)
-        fprintf (stat, "%lu,", table_[i_elem] ? table_[i_elem]->elem_number : 0);
+    {
+        size_t size = table_[i_elem] ? table_[i_elem]->elem_number : 0;
+        E_hash  += size;
+        E2_hash += size * size;
+        fprintf (stat, "%lu,", size);
+    }
+
+    E_hash  /= table_size_;
+    E2_hash /= table_size_;
+
+    printf ("Get statistic: D = %lf\n", E_hash * E_hash - E2_hash);
 
     fseek (stat, -1, SEEK_CUR);
     fprintf (stat, "\n");
