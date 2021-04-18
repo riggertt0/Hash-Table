@@ -21,7 +21,7 @@ hash_t SumHash (const char* key)
     while (*key != 0)
     {
         result += *key;
-        key++; // ToDo: Segfault?
+        key++;
     }
 
     return result;
@@ -47,7 +47,6 @@ hash_t RolHash (const char* key)
     assert (key);
     hash_t hash = 0;
 
-    // ToDo: Segfault?
     while (*key != 0)
     {
         hash = (hash << 1) + ((hash & MASK) >> ROL_ROR_SIZE) + *key; // shl (hash) + big byte + symbol
@@ -62,7 +61,6 @@ hash_t RorHash (const char* key)
     assert (key);
     hash_t hash = 0;
 
-    // ToDo: Segfault?
     while (*key != 0)
     {
         hash = (hash >> 1) + ((hash & 1) << ROL_ROR_SIZE) + *key; // shl (hash) + big byte + symbol
@@ -79,7 +77,6 @@ hash_t CRC32Hash (const char* key)
     const hash_t pol_old_bit = 1 << 26;
     hash_t hash = 0x0;
 
-    // ToDo: Segfault?
     while (*key)
     {
         for (int i_bit = 7; i_bit >= 0; i_bit--)

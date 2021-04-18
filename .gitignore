@@ -1,8 +1,8 @@
 *.out
-*.pdf
+# *.pdf
 *.csv
 *.svg
-*.png
+# *.png
 *.data
 *.old
 profile
