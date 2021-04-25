@@ -296,4 +296,147 @@
 
 <img src = "Lab 2/Screenshots/ror.png" height = 410>
 
-Функции.
+Функции ROL и ROR уменьшили количество инструкций с 8М до 4М, т.е. в 2 раза. А у CRC их стало 4,7М (напомню, что было 34М у -О3 и 94М без -О3), т.е. алгоритм стал значительно эффективнее благодаря инструкциям SSE4.2.
+
+<details>
+<summary> Спойлер 3, в инструкциях, без оптимизаций </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/3crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/3rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/3ror.png">
+</details>
+
+<details>
+<summary> Спойлер 3, в процентах, без оптимизаций </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/No optimization/percent/3crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/No optimization/percent/3rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/No optimization/percent/3ror.png">
+</details>
+
+<details>
+<summary> Спойлер 3, в инструкциях, с оптимизациями </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/-O3/instructions/3crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/-O3/instructions/3rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/-O3/instructions/3ror.png">
+</details>
+
+<details>
+<summary> Спойлер 3, в процентах, с оптимизациями </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/-O3/percent/3crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/-O3/percent/3rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/-O3/percent/3ror.png">
+</details>
+
+Кстати, тут была предпринята попытка снизить время исполнения с помощью оптимизации strlen, который занимает значительную часть времени от CRC (обычный цикл на assembly), но количество инструкций оказалось больше. Вывод - попытка оказалась неудачной, изменения были удалены.
+
+<details>
+<summary> Спойлер 3.14, в инструкциях, без оптимизаций </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/3crc_blen.png">
+
+</details>
+
+### Улучшение 3
+
+На этом этапе было замечено, что размер таблицы не является простым числом, поэтому было принято решение исправить эту оплошность. Оптимизация оказалась успешной. Так например, для CRC без -O3 количество инструкций __strcmp_avx2 снизилось с 5,3М до 3,7М, т.е. на 30%.
+
+<details>
+<summary> Спойлер 4, в инструкциях, без оптимизаций </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/4crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/4rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/No optimization/instructions/4ror.png">
+</details>
+
+<details>
+<summary> Спойлер 4, в процентах, без оптимизаций </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/No optimization/percent/4crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/No optimization/percent/4rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/No optimization/percent/4ror.png">
+</details>
+
+<details>
+<summary> Спойлер 4, в инструкциях, с оптимизациями </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/-O4/instructions/4crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/-O4/instructions/4rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/-O4/instructions/4ror.png">
+</details>
+
+<details>
+<summary> Спойлер 4, в процентах, с оптимизациями </summary>
+
+#### __CRC__
+
+<img src = "Lab 2/Graphics/-O4/percent/4crc.png">
+
+#### __ROL__
+
+<img src = "Lab 2/Graphics/-O4/percent/4rol.png">
+
+#### __ROR__
+
+<img src = "Lab 2/Graphics/-O4/percent/4ror.png">
+</details>

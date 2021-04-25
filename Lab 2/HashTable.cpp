@@ -41,6 +41,7 @@ HashTable :: HashTable (size_t size, hash_t (*hash_func) (const char*)):
     table_size_ (size),
     hash_func_  (hash_func)
 {
+    // ToDo: Simple size
     return;
 }
 
@@ -55,6 +56,8 @@ HashTable :: ~HashTable ()
 
 void HashTable :: FillTable (const char* filename)
 {
+    // ToDo: Data converter
+
     assert (filename);
     if (database_ != nullptr)
     {
