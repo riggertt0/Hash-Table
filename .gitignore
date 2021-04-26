@@ -8,3 +8,5 @@
 profile
 callgrind.out*
 *.txt
+*.o
+Graphic.pdf

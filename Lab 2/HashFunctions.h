@@ -10,7 +10,7 @@ hash_t SumLenHash    (const char* key);
 hash_t FirstCharHash (const char* key);
 extern "C"
 {
-    hash_t RolHash       (const char* key);
-    hash_t RorHash       (const char* key);
-    hash_t CRC32Hash     (const char* key);
+    hash_t RolHash   (__m256i* key);
+    hash_t RorHash   (__m256i* key);
+    hash_t CRC32Hash (__m256i* key);
 }

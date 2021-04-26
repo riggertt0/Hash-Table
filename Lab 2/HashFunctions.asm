@@ -8,36 +8,13 @@ extern strlen
 
 CRC32Hash:
 
-    push rbp 
-    mov  rbp, rsp
-
-    push rdi
-    call strlen
-    pop rdi
-    mov rcx, rax
     xor rax, rax
-
-    crc_while_len4:
-
-        cmp rcx, 4
-        jb crc_while_len0
-        crc32 eax, dword [rdi]
-        add rdi, 4
-        sub rcx, 4
-        jmp crc_while_len4
-
-    crc_while_len0:
-
-        cmp rcx, 0
-        je crc_end
-        crc32 eax, byte [rdi]
-        inc rdi
-        dec rcx
-        jmp crc_while_len0
-
-    crc_end:
     
-    pop rbp
+    crc32 rax, qword [rdi]
+    crc32 rax, qword [rdi + 8]
+    crc32 rax, qword [rdi + 16]
+    crc32 rax, qword [rdi + 24]
+
     ret
 
 RolHash:
