@@ -27,10 +27,10 @@ class Elem final: public Noncopyable
 public:
 
     Elem () = default;
-    Elem (const char* key, const char* value);
+    Elem (__m256i* key, const char* value);
    ~Elem ();
 
-    __m256i     key_   = _mm256_set1_epi8 (0);
+    __m256i*    key_;
     const char* value_;
     Elem*       next_  = nullptr;
     size_t elem_number = 0;
@@ -45,16 +45,19 @@ public:
    ~HashTable(); 
 
     //! @note: File format: strings key=value, EOL = \r\n
-    void FillTable (const char* filename);
+    void FillTable ();
     void GetStatistic ();
     const char* Find (__m256i key);
 
 private:
 
-    Elem** table_   = nullptr;
+    __m256i*     keys_ = nullptr;
+    Elem**      table_ = nullptr;
+    char*      values_ = nullptr;
+    Elem*   elem_data_ = nullptr;
     size_t table_size_ = 0;
 
-    void AddKey (const char* key, const char* value);
+    inline void AddKey (Elem* elem, __m256i* key, const char* value);
     hash_t (*hash_func_) (__m256i*) = nullptr;
 };
 

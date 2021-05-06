@@ -1,13 +1,10 @@
 #include "HashTable.h"
 
-Elem :: Elem (const char* key, const char* value):
-    value_ (strdup (value))
+Elem :: Elem (__m256i* key, const char* value):
+    key_   (key),
+    value_ (value)
 {
-    // ToDo: throw exception
-    assert (key);
-    assert (value_);
-
-    strncpy ((char*) &key_, key, KEY_SIZE);
+    // assert (value);
 }
 
 Elem :: ~Elem()
@@ -15,80 +12,78 @@ Elem :: ~Elem()
     if (this)
     {
         delete next_;
-        delete value_;
         next_  = nullptr;
-        key_   = _mm256_set1_epi8 (0);
+        key_   = nullptr;
         value_ = nullptr;
     }
     return;
 }
 
 HashTable :: HashTable (size_t size, hash_t (*hash_func) (__m256i*)):
-    table_      (new Elem* [size]),
+    table_      ((Elem**) calloc (size, sizeof (*table_))),
     table_size_ (size),
     hash_func_  (hash_func)
 {
     // ToDo: Simple size
-    return;
 }
 
 HashTable :: ~HashTable ()
 {
-    for (size_t i_elem = 0; i_elem < table_size_; i_elem++)
-        delete table_[i_elem];
+    // for (size_t i_elem = 0; i_elem < table_size_; i_elem++)
+    //     delete table_[i_elem];
     table_size_ = 0;
-    delete table_;
+    free (table_);
+    free (values_);
+    free (elem_data_);
+    free (keys_);
 }
 
-void HashTable :: FillTable (const char* filename)
+void HashTable :: FillTable ()
 {
-    // ToDo: Data converter
-    assert (filename);
-    char* database_ = nullptr;
+    size_t* pointers = nullptr;
 
-    ReadFile (&database_, filename);
-    if (!database_)
-        return;
-    
-    char* database = database_;
-    
-    #define check_wrong_file if (!database)                              \
-                             {                                           \
-                                 printf ("Error: Wrong file format.\n"); \
-                                 delete database_;                       \
-                                 return;                                 \
-                             }
+    // ToDo: Delete copypaste
 
-    while (*database)
+    size_t elem_num = ReadFile ((char**) &keys_, "Database/intrinsics");
+    elem_num /= 32;
+    if (!elem_num)
     {
-        char* key = database;
-        database = strchr (database, '=');
-
-        check_wrong_file;
-
-        *database = '\0';
-        char* value = database + 1;
-        database = strchr (database + 1, '\r');
-
-        check_wrong_file;
-
-        database[0] = '\0';
-        database[1] = '\0';
-        database += 2;
-        AddKey (key, value);
+        printf ("Error: Can't open \"Database/intrinsics\"\n");
+        return;
     }
 
-    #undef check_wrong_file
-    delete database_;
+    if (!ReadFile (&values_, "Database/values"))
+    {
+        printf ("Error: Can't open \"Database/values\"\n");
+        free (keys_);
+        return;
+    }
+
+    if (!ReadFile ((char**) &pointers, "Database/pointers"))
+    {
+        printf ("Error: Can't open \"Database/pointers\"\n");
+        free (values_);
+        free (keys_);
+        return;
+    }
+
+    elem_data_ = (Elem*) calloc (elem_num, sizeof(*elem_data_));
+
+    for (size_t i_elem = 0; i_elem < elem_num; i_elem++)
+        AddKey (elem_data_ + i_elem, keys_ + i_elem, values_ + pointers[i_elem]);
+
+    free (pointers);
 }
 
-void HashTable :: AddKey (const char* key, const char* value)
+inline void HashTable :: AddKey (Elem* elem, __m256i* key, const char* value)
 {
-    assert (key);
-    assert (value);
-
-    Elem* elem        = new Elem (key, value);
-    hash_t position   = hash_func_ (&(elem->key_)) % table_size_;
+    // assert (key);
+    // assert (value);
+    
+    // Elem* elem        = new Elem (key, value);
+    elem->key_   = key;
+    elem->value_ = value;
+    hash_t position   = hash_func_ (key) % table_size_;
     elem->elem_number = table_[position] ? table_[position]->elem_number + 1 : 1;
     elem->next_       = table_[position];
     table_[position]  = elem;
@@ -183,7 +178,7 @@ const char* HashTable :: Find (__m256i key)
 
     while (list != nullptr)
     {
-        if (_mm256_testc_si256 (key, list->key_))
+        if (_mm256_testc_si256 (key, _mm256_loadu_si256(list->key_)))
             return list->value_;
         
         list = list->next_;

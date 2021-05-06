@@ -8,7 +8,7 @@ int main()
 {
     srand (time (0));
     HashTable table (4409, CRC32Hash);
-    table.FillTable ("../Dicts/UTF-dict1.txt");
+    table.FillTable ();
     // table.GetStatistic ();
 
     const char* test_list_[] = {"cat", "dog", "fox", "monkey", "elephant", "chel", "fucker", "slave"};

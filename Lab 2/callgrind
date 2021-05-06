@@ -1,5 +1,5 @@
 all: main.cpp HashTable.cpp HashFunctions.asm
 	nasm -f elf64 HashFunctions.asm
-	g++ main.cpp HashTable.cpp -Wall -c -mavx2 -msse4.2 -faligned-new -O3
-	g++ main.o HashTable.o HashFunctions.o -no-pie -mavx2 -msse4.2 -faligned-new -O3
+	g++ main.cpp HashTable.cpp -Wall -c -mavx2 -msse4.2 -faligned-new
+	g++ main.o HashTable.o HashFunctions.o -no-pie -mavx2 -msse4.2 -faligned-new
 	valgrind --tool=callgrind ./a.out
