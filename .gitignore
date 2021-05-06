@@ -10,3 +10,6 @@ callgrind.out*
 *.txt
 *.o
 Graphic.pdf
+intrinsics
+pointers
+values
