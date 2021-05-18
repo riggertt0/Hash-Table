@@ -13,7 +13,11 @@
 ### 1) Const Hash
 
 Эта функция всегда возвращает 1.
-*(*(*(*)
+<table>
+    <tr>
+        <td> <img src="Data//Constant pic1.png" alt="drawing" width="400"/> </td>
+    </tr>
+</table>
 Как видно из диаграммы, это абсолютно бесполезно.
 
 
