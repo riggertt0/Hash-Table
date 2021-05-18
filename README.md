@@ -13,11 +13,7 @@
 ### 1) Const Hash
 
 Эта функция всегда возвращает 1.
-<table>
-    <tr>
-        <td> <img src="Data//Constant pic1.png" alt="drawing" width="400"/> </td>
-    </tr>
-</table>
+![image](https://user-images.githubusercontent.com/70891530/118662152-75bc9e00-b7f8-11eb-9ae1-a8dcad346573.png)
 Как видно из диаграммы, это абсолютно бесполезно.
 
 
