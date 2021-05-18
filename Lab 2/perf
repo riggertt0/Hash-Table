@@ -1,4 +1,0 @@
-all: main.cpp HashTable.cpp HashFunctions.cpp
-	g++ main.cpp HashTable.cpp HashFunctions.cpp -Wall -g
-	sudo perf record -g ./a.out
-	sudo perf script | ~/Flamegraph/stackcollapse-perf.pl | ~/Flamegraph/flamegraph.pl > flamegraph.svg
