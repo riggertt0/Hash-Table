@@ -253,5 +253,5 @@ inline size_t fast_strlen(const char* str)
 ### 8)                                        Заключение
 В итоге мне удалось повысить производительность хэш таблицы на 71%.
 
-*(*(*(*)
+![image](https://user-images.githubusercontent.com/70891530/118662518-bc11fd00-b7f8-11eb-9850-55787fb037ed.png)
 
